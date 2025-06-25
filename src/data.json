@@ -1,0 +1,400 @@
+{
+  "home": {
+    "title": "IPv6 Site Networking – Streamline GmbH",
+    "subtitle": "A Network Project by B@ltic Networks",
+    "images": [
+      {
+        "src": "/Logo_LF09.png",
+        "alt": "Streamline Project Logo"
+      }
+    ],
+    "cta": "Explore the Project"
+  },
+  "organization": {
+    "title": "Our Tests & Project Setup",
+    "sections": [
+      {
+        "heading": "Scrum Process",
+        "image": "/Sprint-Board.png",
+        "caption": "Agile Scrum workflow used throughout the project",
+        "highlighted": true
+      },
+      {
+        "heading": "Our Tests",
+        "TestsMembers": [
+          {
+            "name": "Dhiya Ben Khemila",
+            "photo": "/profile/prof1.png"
+          },
+          {
+            "name": "Kenza Nabaghi",
+            "photo": "/profile/prof2.png"
+          },
+          {
+            "name": "Mohamed Slassi",
+            "photo": "/profile/prof3.png"
+          }
+        ]
+      },
+      {
+        "heading": "Tools We Used",
+        "tools": [
+          {
+            "name": "Trello",
+            "logo": "/icons/trello.png"
+          },
+          {
+            "name": "Visual Studio Code",
+            "logo": "/icons/vscode.png"
+          },
+          {
+            "name": "Cisco Packet Tracer",
+            "logo": "/icons/packettracer.png"
+          }
+        ]
+      }
+    ]
+  
+  },
+
+  "topology": {
+    "title": "Network Topology",
+    "description": "Finalized IPv6 network layout implemented in Cisco Packet Tracer across all four locations.",
+    "image": {
+      "src": "/final-topology.png",
+      "alt": "Cisco IPv6 Topology"
+    },
+    "locationOverview": [
+      {
+        "location": "Hamburg (HH)",
+        "devices": "RT-HH-01, SW-HH-01",
+        "vlans": "VLAN 10, VLAN 20",
+        "clients": "2 Clients"
+      },
+      {
+        "location": "Lübeck (HL)",
+        "devices": "RT-HL-01, SW-HL-01",
+        "vlans": "VLAN 30, VLAN 40",
+        "clients": "2 Clients"
+      },
+      {
+        "location": "Berlin (B)",
+        "devices": "RT-B-01, SW-B-01",
+        "vlans": "VLAN 50",
+        "clients": "DNS, Web, DHCPv6 Server"
+      },
+      {
+        "location": "München (M)",
+        "devices": "RT-M-01, SW-M-01",
+        "vlans": "VLAN 80",
+        "clients": "Web Server"
+      }
+    ]
+  },
+
+
+  "ipPlan": {
+    "title": "IPv6 Address Plan",
+    "intro": "Our IPv6 network uses a Provider Independent address space (2001:db8::/32), fully statically assigned. Each VLAN has its own Global Unicast prefix, and transport networks between routers use Unique Local IPv6 addresses (fd00::/8).",
+    "prefixOverview": [
+      {
+        "location": "Hamburg",
+        "vlans": [
+          { "name": "VLAN 10 – Clients", "prefix": "2001:db8:HH10::/64" },
+          { "name": "VLAN 20 – Servers", "prefix": "2001:db8:HH20::/64" }
+        ]
+      },
+      {
+        "location": "Lübeck",
+        "vlans": [
+          { "name": "VLAN 30 – Clients", "prefix": "2001:db8:HL30::/64" },
+          { "name": "VLAN 40 – Servers", "prefix": "2001:db8:HL40::/64" }
+        ]
+      },
+      {
+        "location": "Berlin",
+        "vlans": [
+          { "name": "VLAN 50 – Server", "prefix": "2001:db8:B50::/64" }
+        ]
+      },
+      {
+        "location": "München",
+        "vlans": [
+          { "name": "VLAN 80 – Server", "prefix": "2001:db8:M80::/64" }
+        ]
+      }
+    ],
+    "interfaceAssignments": [
+      {
+        "device": "R-HH-01",
+        "interface": "G0/0",
+        "role": "Clients VLAN Gateway",
+        "address": "2001:db8:HH10::1/64",
+        "type": "Global Unicast"
+      },
+      {
+        "device": "R-HH-01",
+        "interface": "S0/0/0",
+        "role": "Link to R-HL-01",
+        "address": "fd00:hhhl::1/127",
+        "type": "Unique Local"
+      },
+      {
+        "device": "SW-HH-01",
+        "interface": "VLAN 10",
+        "role": "Client Port",
+        "address": "2001:db8:HH10::11–20",
+        "type": "Global Unicast"
+      }
+    ]
+  },
+  "config": {
+    "title": "Device Configuration Examples",
+    "intro": "These are real CLI snippets used on our routers and switches to set up IPv6, VLANs, routing, and access security.",
+    "sections": [
+      {
+        "label": "🌐 Router Basic IPv6 Setup",
+        "device": "R-HH-01",
+        "code": [
+          "hostname R-HH-01",
+          "ipv6 unicast-routing",
+          "interface g0/0",
+          " description VLAN 10 (Clients)",
+          " ipv6 address 2001:db8:HH10::1/64",
+          "interface s0/0/0",
+          " ipv6 address fd00:hhhl::1/127",
+          " exit"
+        ]
+      },
+      {
+        "label": "📶 VLAN & Interface Config",
+        "device": "SW-HH-01",
+        "code": [
+          "vlan 10",
+          " name Clients",
+          "interface vlan 10",
+          " ipv6 address 2001:db8:HH10::11/64",
+          " no shutdown"
+        ]
+      },
+      {
+        "label": "🔒 SSH + Security",
+        "device": "R-HH-01",
+        "code": [
+          "ip domain-name streamline.local",
+          "crypto key generate rsa",
+          "username admin secret Baltic@2025",
+          "line vty 0 4",
+          " transport input ssh",
+          " login local",
+          "banner motd #Unauthorized access prohibited!#"
+        ]
+      }
+    ]
+  },
+  "security": {
+    "title": "Security & Access Control",
+    "intro": "We configured secure access on all routers and switches using SSH, encrypted logins, and warning banners to block unauthorized entry.",
+    "sections": [
+      {
+        "label": "🔐 SSH Access",
+        "device": "Router R-HH-01",
+        "code": [
+          "ip domain-name streamline.local",
+          "crypto key generate rsa",
+          "username admin secret Baltic@2025",
+          "line vty 0 4",
+          " transport input ssh",
+          " login local"
+        ]
+      },
+      {
+        "label": "🧷 Password Protection",
+        "device": "Router R-HH-01",
+        "code": [
+          "enable secret Baltic@Enable",
+          "line console 0",
+          " password admin123",
+          " login",
+          "service password-encryption"
+        ]
+      },
+      {
+        "label": "📢 Login Banner",
+        "device": "All Routers",
+        "code": [
+          "banner motd #",
+          " Unauthorized access prohibited!",
+          "#"
+        ]
+      }
+    ]
+  },
+  
+  "testValidation": {
+    "title": "Tests & Validation",
+    "intro": "To verify that our IPv6 network operates reliably, we ran live ping tests, checked routing tables, and corrected early misconfigurations during setup.",
+    "screenshots": [
+      {
+        "label": "✅ Ping: Client HH → Server Berlin",
+        "image": "/test/ping-hh-to-berlin.png",
+        "caption": "Successful ICMPv6 reply confirms global reachability."
+      },
+      {
+        "label": "📍 Route Table: R-HH-01",
+        "image": "/test/show-ipv6-route.png",
+        "caption": "Manually configured static routes are active and reachable."
+      },
+      {
+        "label": "🔍 Interface Overview",
+        "image": "/test/ipv6-interface-brief.png",
+        "caption": "All router interfaces have correct addresses and are up."
+      }
+    ],
+    "testResults": [
+      {
+        "test": "Ping HH → HL",
+        "expected": "ICMPv6 reply",
+        "fix": "Corrected switch trunk mode and VLAN tagging"
+      },
+      {
+        "test": "Client HH → Server B",
+        "expected": "Global connection working",
+        "fix": "No issue"
+      },
+      {
+        "test": "SSH to Router HL",
+        "expected": "Login prompt shows",
+        "fix": "Added VTY access config with local login"
+      },
+      {
+        "test": "Static Route R-B → R-M",
+        "expected": "Visible in `show ipv6 route`",
+        "fix": "Updated incorrect next-hop address"
+      }
+    ]
+  },
+
+  "moscow": {
+    "title": "MoSCoW Prioritization – Future Extensions",
+    "intro": "To identify what's critical and what can wait, we used the MoSCoW method. This helps organize future IPv6 network upgrades by necessity and impact.",
+    "categories": [
+      {
+        "label": "Must Have",
+        "description": "Essential for system operation and security.",
+        "features": [
+          "SSH Access & Login Security",
+          "IPv6 VLAN Addressing Plan",
+          "Static Routing for Inter-Site Links"
+        ]
+      },
+      {
+        "label": "Should Have",
+        "description": "Important features that improve stability or performance.",
+        "features": [
+          "Router Redundancy (VRRP or HSRP)",
+          "OSPFv3 Dynamic Routing",
+          "Centralized Syslog/Monitoring"
+        ]
+      },
+      {
+        "label": "Could Have",
+        "description": "Nice-to-have enhancements or visual tools.",
+        "features": [
+          "Real-Time Topology Dashboard",
+          "SNMP Network Monitoring",
+          "Dark Mode for Web Frontend"
+        ]
+      },
+      {
+        "label": "Won't Have (Yet)",
+        "description": "Out of scope for this iteration, but considered.",
+        "features": [
+          "Wireless VLAN Extension",
+          "Mobile App for Admin Access"
+        ]
+      }
+    ]
+  },
+
+  "conclusion": {
+    "title": "Conclusion & Reflection",
+    "intro": "This project gave us the opportunity to apply IPv6 networking concepts in a practical, collaborative setup. Here’s what stood out.",
+    "whatWentWell": [
+      "Team coordination through Trello and clearly assigned roles",
+      "Scrum helped us track progress and adapt during configuration",
+      "All routers communicated successfully using static routes",
+      "SSH access was secured and tested for each router"
+    ],
+    "challenges": [
+      "Early VLAN tagging inconsistencies between switches and routers",
+      "SSH login didn’t work initially due to missing VTY configuration",
+      "Some IP assignments were misaligned before route validation",
+      "Testing with Packet Tracer CLI sometimes gave unexpected results"
+    ],
+    "learnings": [
+      "Hands-on experience with IPv6 prefix planning and VLAN structuring",
+      "Troubleshooting network errors using real commands",
+      "Working together under pressure during test and validation phase",
+      "Understanding why planning and naming conventions are so important"
+    ]
+  },
+  "api": {
+    "title": "API Documentation & Design Overview",
+    "intro": "To support integration, automation, and transparency in our project, we designed a RESTful API that delivers key project data through structured endpoints. Here's how it was planned and implemented.",
+    "answers": [
+      {
+        "question": "What is your motivation for implementing those APIs?",
+        "answer": "To provide machine-readable access to project structure and configuration data and enable frontends and scripts to interact with it efficiently."
+      },
+      {
+        "question": "What is the purpose of this API?",
+        "answer": "To expose our IPv6 network design, address plan, configuration snippets, and team structure in JSON format."
+      },
+      {
+        "question": "Who is the user?",
+        "answer": "Project team members, instructors, and any tool or app needing programmatic access to our data."
+      },
+      {
+        "question": "What user pains are we solving or gains are we creating?",
+        "answer": "Reduces manual updates, enables visualization tools, supports modular, scalable documentation."
+      },
+      {
+        "question": "What concrete outcomes do we want to achieve with these APIs?",
+        "answer": "Enable a GUI to render all core project data and support automated testing and validation flows."
+      },
+      {
+        "question": "How do we plan to execute the API program?",
+        "answer": "Using Express.js to deliver static and dynamic endpoints during development, deploy-ready via Node.js."
+      },
+      {
+        "question": "What is the architectural style and why?",
+        "answer": "REST – it's stateless, simple to consume, and integrates well with both frontend and external tools."
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/api/topology",
+        "desc": "Returns topology structure and image path"
+      },
+      {
+        "method": "GET",
+        "route": "/api/team",
+        "desc": "Returns full team member list with roles"
+      },
+      {
+        "method": "GET",
+        "route": "/api/ip-plan",
+        "desc": "Returns IPv6 address plan and interface mappings"
+      },
+      {
+        "method": "POST",
+        "route": "/api/log",
+        "desc": "Accepts logs or annotations for validation"
+      }
+    ]
+  }
+}
+
+
