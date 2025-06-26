@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-const Retrospektive = () => {
-  return <div>Hello hallo</div>;
-};
+// const Retrospektive = () => {
+//   return <div>Hello hallo</div>;
+// };
 
-export default Retrospektive;
+// export default Retrospektive;

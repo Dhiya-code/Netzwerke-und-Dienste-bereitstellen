@@ -9,7 +9,7 @@ import Conclusion from "./pages/Conclusion";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import APIDoc from "./pages/APIDoc";
-import Retrospektive from "./pages/Retrospektive";
+// import Retrospektive from "./pages/Retrospektive";
 import Organization from "./pages/Organization";
 import MoSCoW from "./pages/MoSCoW";
 
@@ -73,11 +73,11 @@ function App() {
                   API
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/retrospektive">
                   Retrospektive
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -95,7 +95,7 @@ function App() {
           <Route path="/MoSCoW" element={<MoSCoW />} />
           <Route path="/conclusion" element={<Conclusion />} />
           <Route path="/api-doc" element={<APIDoc />} />
-          <Route path="/retrospektive" element={<Retrospektive />} />
+          {/* <Route path="/retrospektive" element={<Retrospektive />} /> */}
         </Routes>
       </div>
 
