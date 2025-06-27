@@ -64,13 +64,13 @@ function App() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/conclusion">
-                  Conclusion
+                <Link className="nav-link" to="/api-doc">
+                  API
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/api-doc">
-                  API
+                <Link className="nav-link" to="/conclusion">
+                  Conclusion
                 </Link>
               </li>
               {/* <li className="nav-item">
@@ -93,8 +93,8 @@ function App() {
           <Route path="/security" element={<Security />} />
           <Route path="/Tests" element={<Tests />} />
           <Route path="/MoSCoW" element={<MoSCoW />} />
-          <Route path="/conclusion" element={<Conclusion />} />
           <Route path="/api-doc" element={<APIDoc />} />
+          <Route path="/conclusion" element={<Conclusion />} />
           {/* <Route path="/retrospektive" element={<Retrospektive />} /> */}
         </Routes>
       </div>

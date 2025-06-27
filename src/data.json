@@ -158,7 +158,7 @@
         "code": [
           "hostname R-HH-01",
           "ipv6 unicast-routing",
-          "interface g0/0",
+          "interface g0/0.10",
           " description VLAN 10 (Clients)",
           " ipv6 address 2001:db8:0:10::1/64",
           "interface s0/0/0",
@@ -187,8 +187,19 @@
           "line vty 0 4",
           " transport input ssh",
           " login local",
-          "banner motd #Unauthorized access prohibited!#"
-        ]
+  "banner motd ^C",
+  "*************************************************************************",
+  "                  UNAUTHORIZED ACCESS PROHIBITED                     ",
+  "",
+  "-All activities are monitored and recorded",
+  "Warning ",
+  "-Unauthorized access or use will be prosecuted to the     ",
+  "fullest extent of the law. By accessing this system, you agree to      ",
+  "comply with the organization's policies and applicable laws   ",
+  "",
+  "**************************************************************************",
+  "^C"
+]
       }
     ]
   },
@@ -215,8 +226,7 @@
           "enable secret cisco",
           "line console 0",
           " password cisco",
-          " login",
-          "service password-encryption"
+          " login"
         ]
       },
       {
