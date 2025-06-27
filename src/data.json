@@ -118,7 +118,7 @@
         ]
       },
       {
-        "location": "München",
+        "location": "Munich",
         "vlans": [
           { "name": "VLAN 80 – Server", "prefix": "2001:db8:M80::/64" }
         ]
