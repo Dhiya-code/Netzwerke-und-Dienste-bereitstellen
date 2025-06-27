@@ -84,7 +84,7 @@
         "clients": "DNS, Web, DHCPv6 Server"
       },
       {
-        "location": "München (M)",
+        "location": "Munich",
         "devices": "RT-M-01, SW-M-01",
         "vlans": "VLAN 60",
         "clients": "Web Server"
