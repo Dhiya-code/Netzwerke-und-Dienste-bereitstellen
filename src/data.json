@@ -100,27 +100,27 @@
       {
         "location": "Hamburg",
         "vlans": [
-          { "name": "VLAN 10 – Clients", "prefix": "2001:db8:HH10::/64" },
-          { "name": "VLAN 20 – Servers", "prefix": "2001:db8:HH20::/64" }
+          { "name": "VLAN 10 – Clients", "prefix": "2001:db8:0:10::/64" },
+          { "name": "VLAN 20 – Servers", "prefix": "2001:db8:0:20::/64" }
         ]
       },
       {
         "location": "Lübeck",
         "vlans": [
-          { "name": "VLAN 30 – Clients", "prefix": "2001:db8:HL30::/64" },
-          { "name": "VLAN 40 – Servers", "prefix": "2001:db8:HL40::/64" }
+          { "name": "VLAN 30 – Clients", "prefix": "2001:db8:0:30::/64" },
+          { "name": "VLAN 40 – Servers", "prefix": "2001:db8:0:40::/64" }
         ]
       },
       {
         "location": "Berlin",
         "vlans": [
-          { "name": "VLAN 50 – Server", "prefix": "2001:db8:B50::/64" }
+          { "name": "VLAN 50 – Server", "prefix": "2001:db8:0:50::/64" }
         ]
       },
       {
         "location": "Munich",
         "vlans": [
-          { "name": "VLAN 80 – Server", "prefix": "2001:db8:M80::/64" }
+          { "name": "VLAN 60 – Server", "prefix": "2001:db8:0:60::/64" }
         ]
       }
     ],
@@ -129,21 +129,21 @@
         "device": "R-HH-01",
         "interface": "G0/0",
         "role": "Clients VLAN Gateway",
-        "address": "2001:db8:HH10::1/64",
+        "address": "2001:db8:0:10::1/64",
         "type": "Global Unicast"
       },
       {
         "device": "R-HH-01",
         "interface": "S0/0/0",
         "role": "Link to R-HL-01",
-        "address": "fd00:hhhl::1/127",
+        "address": "fd00:1:1::1/127",
         "type": "Unique Local"
       },
       {
         "device": "SW-HH-01",
         "interface": "VLAN 10",
         "role": "Client Port",
-        "address": "2001:db8:HH10::11–20",
+        "address": "2001:db8:0:10::11–20",
         "type": "Global Unicast"
       }
     ]
@@ -160,9 +160,9 @@
           "ipv6 unicast-routing",
           "interface g0/0",
           " description VLAN 10 (Clients)",
-          " ipv6 address 2001:db8:HH10::1/64",
+          " ipv6 address 2001:db8:0:10::1/64",
           "interface s0/0/0",
-          " ipv6 address fd00:hhhl::1/127",
+          " ipv6 address fd00:1:1::1/127",
           " exit"
         ]
       },
@@ -173,7 +173,7 @@
           "vlan 10",
           " name Clients",
           "interface vlan 10",
-          " ipv6 address 2001:db8:HH10::11/64",
+          " ipv6 address 2001:db8:0:10::11/64",
           " no shutdown"
         ]
       },
@@ -181,9 +181,9 @@
         "label": "🔒 SSH + Security",
         "device": "R-HH-01",
         "code": [
-          "ip domain-name streamline.local",
+          "ip domain-name cisco.com",
           "crypto key generate rsa",
-          "username admin secret Baltic@2025",
+          "username admin secret cicso",
           "line vty 0 4",
           " transport input ssh",
           " login local",
@@ -200,9 +200,9 @@
         "label": "🔐 SSH Access",
         "device": "Router R-HH-01",
         "code": [
-          "ip domain-name streamline.local",
+          "ip domain-name cisco.com",
           "crypto key generate rsa",
-          "username admin secret Baltic@2025",
+          "username admin secret cisco",
           "line vty 0 4",
           " transport input ssh",
           " login local"
@@ -212,9 +212,9 @@
         "label": "🧷 Password Protection",
         "device": "Router R-HH-01",
         "code": [
-          "enable secret Baltic@Enable",
+          "enable secret cisco",
           "line console 0",
-          " password admin123",
+          " password cisco",
           " login",
           "service password-encryption"
         ]
@@ -223,9 +223,18 @@
         "label": "📢 Login Banner",
         "device": "All Routers",
         "code": [
-          "banner motd #",
-          " Unauthorized access prohibited!",
-          "#"
+"banner motd ^C",
+"*************************************************************************",
+"                 UNAUTHORIZED ACCESS PROHIBITED                     ",
+"",
+"-All activities are monitored and recorded",
+"Warning ",
+"-Unauthorized access or use will be prosecuted to the     ",
+"fullest extent of the law. By accessing this system, you agree to      ",
+"comply with the organization's policies and applicable laws   ",
+"",
+"**************************************************************************",
+"^C"
         ]
       }
     ]
