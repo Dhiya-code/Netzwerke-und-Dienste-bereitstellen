@@ -86,7 +86,7 @@
       {
         "location": "München (M)",
         "devices": "RT-M-01, SW-M-01",
-        "vlans": "VLAN 80",
+        "vlans": "VLAN 60",
         "clients": "Web Server"
       }
     ]
